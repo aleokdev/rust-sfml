@@ -17,6 +17,11 @@ fn main() {
         println!("cargo:warning=Custom SFML include dir: {}", sfml_inc_dir);
         build.include(sfml_inc_dir);
     }
+    if let Ok(_) = env::var("SFML_USE_STATIC_LIBSTD") {
+        println!("cargo:warning=Using static libstd");
+        build.flag("-static-libstdc++");
+        build.flag("-static-libgcc");
+    }
     let feat_audio = env::var("CARGO_FEATURE_AUDIO").is_ok();
     let feat_window = env::var("CARGO_FEATURE_WINDOW").is_ok();
     let feat_graphics = env::var("CARGO_FEATURE_GRAPHICS").is_ok();
